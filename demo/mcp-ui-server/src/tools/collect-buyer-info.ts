@@ -182,104 +182,110 @@ export function registerCollectBuyerInfoTool(
     .test-button:hover {
       background: #1976d2;
     }
+    .form-section {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .form-section:last-of-type {
+      border-bottom: none;
+    }
+    .form-section h3 {
+      margin: 0 0 16px 0;
+      color: #1a202c;
+      font-size: 16px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
   <div class="checkout-container">
-    <!-- Step 1: Buyer Info -->
+    <!-- Step 1: Buyer Info & Shipping (Combined) -->
     <div id="step-buyer" class="step">
       <h1>Checkout</h1>
-      <div class="step-indicator">Step 1 of 3: Your Information</div>
+      <div class="step-indicator">Step 1 of 2: Your Information & Shipping</div>
 
       <div class="test-notice">
         <strong>Test Mode</strong>
-        <button class="test-button" onclick="fillTestBuyerInfo()">Use Test Data</button>
+        <button class="test-button" onclick="fillTestData()">Use Test Data</button>
       </div>
 
-      <div class="form-group">
-        <label for="firstName">First Name *</label>
-        <input type="text" id="firstName" required>
-        <div id="firstNameError" class="error hidden">First name is required</div>
+      <div class="form-section">
+        <h3>Contact Information</h3>
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input type="text" id="firstName" required>
+          <div id="firstNameError" class="error hidden">First name is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input type="text" id="lastName" required>
+          <div id="lastNameError" class="error hidden">Last name is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" required>
+          <div id="emailError" class="error hidden">Valid email is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number (optional)</label>
+          <input type="tel" id="phone">
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="lastName">Last Name *</label>
-        <input type="text" id="lastName" required>
-        <div id="lastNameError" class="error hidden">Last name is required</div>
+      <div class="form-section">
+        <h3>Shipping Address</h3>
+        <div class="form-group">
+          <label for="addressLine1">Address Line 1 *</label>
+          <input type="text" id="addressLine1" required>
+          <div id="addressLine1Error" class="error hidden">Address is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="addressLine2">Address Line 2 (optional)</label>
+          <input type="text" id="addressLine2">
+        </div>
+
+        <div class="form-group">
+          <label for="city">City *</label>
+          <input type="text" id="city" required>
+          <div id="cityError" class="error hidden">City is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country *</label>
+          <select id="country" required onchange="updateStateOptions()">
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+          </select>
+          <div id="countryError" class="error hidden">Country is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State/Province *</label>
+          <select id="state" required>
+            <option value="">Select a state...</option>
+          </select>
+          <div id="stateError" class="error hidden">State is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="postalCode">Postal/ZIP Code *</label>
+          <input type="text" id="postalCode" required>
+          <div id="postalCodeError" class="error hidden">Postal code is required</div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="email">Email *</label>
-        <input type="email" id="email" required>
-        <div id="emailError" class="error hidden">Valid email is required</div>
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Phone Number (optional)</label>
-        <input type="tel" id="phone">
-      </div>
-
-      <button class="button button-primary" onclick="goToShipping()">Next: Shipping Address →</button>
-    </div>
-
-    <!-- Step 2: Shipping Address -->
-    <div id="step-shipping" class="step hidden">
-      <h1>Checkout</h1>
-      <div class="step-indicator">Step 2 of 3: Shipping Address</div>
-
-      <div class="test-notice">
-        <strong>Test Mode</strong>
-        <button class="test-button" onclick="fillTestAddress()">Use Test Data</button>
-      </div>
-
-      <div class="form-group">
-        <label for="addressLine1">Address Line 1 *</label>
-        <input type="text" id="addressLine1" required>
-        <div id="addressLine1Error" class="error hidden">Address is required</div>
-      </div>
-
-      <div class="form-group">
-        <label for="addressLine2">Address Line 2 (optional)</label>
-        <input type="text" id="addressLine2">
-      </div>
-
-      <div class="form-group">
-        <label for="city">City *</label>
-        <input type="text" id="city" required>
-        <div id="cityError" class="error hidden">City is required</div>
-      </div>
-
-      <div class="form-group">
-        <label for="country">Country *</label>
-        <select id="country" required onchange="updateStateOptions()">
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-        </select>
-        <div id="countryError" class="error hidden">Country is required</div>
-      </div>
-
-      <div class="form-group">
-        <label for="state">State/Province *</label>
-        <select id="state" required>
-          <option value="">Select a state...</option>
-        </select>
-        <div id="stateError" class="error hidden">State is required</div>
-      </div>
-
-      <div class="form-group">
-        <label for="postalCode">Postal/ZIP Code *</label>
-        <input type="text" id="postalCode" required>
-        <div id="postalCodeError" class="error hidden">Postal code is required</div>
-      </div>
-
-      <button class="button button-secondary" onclick="goToBuyer()">← Back</button>
       <button class="button button-primary" onclick="goToReview()">Next: Review →</button>
     </div>
 
-    <!-- Step 3: Review -->
+    <!-- Step 2: Review -->
     <div id="step-review" class="step hidden">
       <h1>Checkout</h1>
-      <div class="step-indicator">Step 3 of 3: Review Your Information</div>
+      <div class="step-indicator">Step 2 of 2: Review Your Information</div>
 
       <div class="review-section">
         <h3 style="margin-top: 0; margin-bottom: 16px; color: #1a202c;">Contact Information</h3>
@@ -323,7 +329,7 @@ export function registerCollectBuyerInfoTool(
 
       <p style="text-align: center; color: #64748b; margin-bottom: 20px;">Does this look right?</p>
 
-      <button class="button button-secondary" onclick="goToShipping()">← Back</button>
+      <button class="button button-secondary" onclick="goToBuyer()">← Back</button>
       <button class="button button-primary" onclick="confirmAndProceed()">Confirm & Continue to Payment →</button>
     </div>
   </div>
@@ -381,15 +387,15 @@ export function registerCollectBuyerInfoTool(
     // Initialize state options on load
     updateStateOptions();
 
-    // Fill test data functions
-    function fillTestBuyerInfo() {
+    // Fill test data function
+    function fillTestData() {
+      // Buyer info
       document.getElementById('firstName').value = 'John';
       document.getElementById('lastName').value = 'Doe';
       document.getElementById('email').value = 'john.doe@example.com';
       document.getElementById('phone').value = '+15551234567';
-    }
-
-    function fillTestAddress() {
+      
+      // Shipping address
       document.getElementById('addressLine1').value = '123 Main Street';
       document.getElementById('addressLine2').value = 'Apt 4B';
       document.getElementById('city').value = 'San Francisco';
@@ -427,7 +433,7 @@ export function registerCollectBuyerInfoTool(
       showStep('step-buyer');
     }
 
-    async function goToShipping() {
+    function goToReview() {
       // Validate buyer info
       const firstName = document.getElementById('firstName').value.trim();
       const lastName = document.getElementById('lastName').value.trim();
@@ -449,39 +455,6 @@ export function registerCollectBuyerInfoTool(
         isValid = false;
       }
 
-      if (!isValid) return;
-
-      // Store buyer info
-      formData.buyer = {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        phone_number: phone || undefined
-      };
-
-      // Update session with buyer info via MCP server
-      try {
-        const response = await fetch('http://localhost:' + ${PORT} + '/checkout/buyer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ buyer: formData.buyer })
-        });
-        if (response.ok) {
-          console.log('Updated buyer info');
-        } else {
-          const error = await response.json();
-          console.error('Failed to update buyer info:', error);
-        }
-      } catch (error) {
-        console.error('Failed to update buyer info:', error);
-      }
-
-      showStep('step-shipping');
-    }
-
-    async function goToReview() {
       // Validate shipping info
       const addressLine1 = document.getElementById('addressLine1').value.trim();
       const addressLine2 = document.getElementById('addressLine2').value.trim();
@@ -489,8 +462,6 @@ export function registerCollectBuyerInfoTool(
       const state = document.getElementById('state').value.trim();
       const country = document.getElementById('country').value.trim();
       const postalCode = document.getElementById('postalCode').value.trim();
-
-      let isValid = true;
 
       if (!addressLine1) {
         showError('addressLine1Error');
@@ -515,9 +486,17 @@ export function registerCollectBuyerInfoTool(
 
       if (!isValid) return;
 
+      // Store buyer info
+      formData.buyer = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone_number: phone || undefined
+      };
+
       // Store shipping info
       formData.shipping = {
-        name: \`\${formData.buyer.first_name} \${formData.buyer.last_name}\`,
+        name: \`\${firstName} \${lastName}\`,
         line_one: addressLine1,
         line_two: addressLine2 || undefined,
         city: city,
@@ -526,7 +505,34 @@ export function registerCollectBuyerInfoTool(
         postal_code: postalCode
       };
 
+      // Update session with buyer info via MCP server
+      updateBuyerInfo();
+    }
+
+    async function updateBuyerInfo() {
+      try {
+        const response = await fetch('http://localhost:' + ${PORT} + '/checkout/buyer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ buyer: formData.buyer })
+        });
+        if (response.ok) {
+          console.log('Updated buyer info');
+        } else {
+          const error = await response.json();
+          console.error('Failed to update buyer info:', error);
+        }
+      } catch (error) {
+        console.error('Failed to update buyer info:', error);
+      }
+
       // Update session with shipping address via MCP server
+      updateShippingInfo();
+    }
+
+    async function updateShippingInfo() {
       try {
         const requestBody = { fulfillment_address: formData.shipping };
         console.log('Sending shipping update:', JSON.stringify(requestBody, null, 2));
@@ -554,6 +560,10 @@ export function registerCollectBuyerInfoTool(
       }
 
       // Populate review
+      populateReviewAndShow();
+    }
+
+    function populateReviewAndShow() {
       document.getElementById('reviewName').textContent = \`\${formData.buyer.first_name} \${formData.buyer.last_name}\`;
       document.getElementById('reviewEmail').textContent = formData.buyer.email;
 
@@ -561,6 +571,13 @@ export function registerCollectBuyerInfoTool(
         document.getElementById('reviewPhone').textContent = formData.buyer.phone_number;
         document.getElementById('reviewPhoneItem').style.display = 'flex';
       }
+
+      const addressLine1 = document.getElementById('addressLine1').value.trim();
+      const addressLine2 = document.getElementById('addressLine2').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const state = document.getElementById('state').value.trim();
+      const country = document.getElementById('country').value.trim();
+      const postalCode = document.getElementById('postalCode').value.trim();
 
       const addressParts = [addressLine1];
       if (addressLine2) addressParts.push(addressLine2);

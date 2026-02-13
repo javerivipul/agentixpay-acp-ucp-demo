@@ -204,6 +204,95 @@ export function registerCollectPaymentDetailsTool(
     .test-button:hover {
       background: #ffb300;
     }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      animation: modalSlideIn 0.3s ease;
+    }
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #d4edda;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-icon svg {
+      width: 40px;
+      height: 40px;
+      color: #28a745;
+    }
+    .modal h2 {
+      margin: 0 0 16px 0;
+      color: #1a202c;
+      font-size: 24px;
+    }
+    .modal p {
+      color: #64748b;
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+    .modal .order-id {
+      font-family: monospace;
+      font-size: 14px;
+      background: #f8f9fa;
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      color: #1a202c;
+    }
+    .modal .amount {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 24px;
+    }
+    .modal .button {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+      transition: all 0.3s;
+    }
+    .modal .button:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -281,6 +370,22 @@ export function registerCollectPaymentDetailsTool(
     </div>
   </div>
 
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal">
+      <div class="success-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h2>Payment Successful!</h2>
+      <p>Your order has been placed successfully.</p>
+      <div class="order-id" id="modalOrderId"></div>
+      <div class="amount" id="modalAmount"></div>
+      <button class="button" onclick="closeModal()">Done</button>
+    </div>
+  </div>
+
   <script>
     const totalAmount = ${totalAmount};
 
@@ -336,7 +441,7 @@ export function registerCollectPaymentDetailsTool(
 
       if (!isValid) {
         button.disabled = false;
-        button.textContent = \`Complete Purchase - $\${(totalAmount / 100).toFixed(2)}\`;
+        button.textContent = 'Complete Purchase - $' + (totalAmount / 100).toFixed(2);
         return;
       }
 
@@ -371,20 +476,31 @@ export function registerCollectPaymentDetailsTool(
         const result = await response.json();
         console.log('Payment completed successfully');
 
-        // Success!
+        // Show success modal
         button.textContent = '✓ Payment Successful!';
         button.style.background = '#28a745';
 
-        setTimeout(() => {
-          alert('Payment completed successfully! Order ID: ' + result.orderId);
-        }, 500);
+        document.getElementById('modalOrderId').textContent = 'Order ID: ' + result.orderId;
+        document.getElementById('modalAmount').textContent = 'Amount: $' + (totalAmount / 100).toFixed(2);
+        document.getElementById('successModal').classList.add('active');
 
       } catch (error) {
         console.error('Payment error:', error);
         alert('Payment failed: ' + error.message);
         button.disabled = false;
-        button.textContent = \`Complete Purchase - $\${(totalAmount / 100).toFixed(2)}\`;
+        button.textContent = 'Complete Purchase - $' + (totalAmount / 100).toFixed(2);
       }
+    }
+
+    function closeModal() {
+      // Trigger the collect_payment_details tool to complete checkout
+      window.parent.postMessage({
+        type: 'tool',
+        payload: {
+          toolName: 'collect_payment_details',
+          params: {}
+        }
+      }, '*');
     }
   </script>
 </body>
