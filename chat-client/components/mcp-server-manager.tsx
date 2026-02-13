@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { nanoid } from 'nanoid';
 import {
     Dialog,
     DialogContent,
@@ -199,7 +200,7 @@ export const MCPServerManager = ({
             return;
         }
 
-        const id = crypto.randomUUID();
+        const id = nanoid();
         const updatedServers = [...servers, { ...newServer, id }];
         onServersChange(updatedServers);
 

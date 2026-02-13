@@ -12,10 +12,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://scira-mcp-chat-indol.vercel.app"),
-  title: "MCP-UI Playground",
-  description: "MCP-UI Playground enables you to experiment with your MCP-UI servers",
+  title: "Chatgpt playground",
+  description: "Chatgpt playground enables you to experiment with your MCP-UI servers",
   openGraph: {
-    siteName: "MCP-UI Playground",
+    siteName: "Chatgpt playground",
     url: "https://scira-mcp-chat-indol.vercel.app",
     images: [
       {
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MCP-UI Playground",
-    description: "MCP-UI Playground enables you to experiment with your MCP-UI servers",
+    title: "Chatgpt playground",
+    description: "Chatgpt playground enables you to experiment with your MCP-UI servers",
     images: ["https://scira-mcp-chat-indol.vercel.app/twitter-image.png"],
   },
 };

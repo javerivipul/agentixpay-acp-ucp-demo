@@ -40,13 +40,13 @@ if [ ! -f demo/mcp-ui-server/.env ]; then
 fi
 
 # Clean up and start containers
-docker-compose down -v
 docker-compose up -d --wait
+sleep 5
 
 # Start all services
-concurrently -n MCP,MERCHANT,PSP -c cyan,green,yellow \
+npx concurrently -n MCP,MERCHANT,PSP -c cyan,green,yellow \
     "cd demo/mcp-ui-server && npm run dev" \
-    "cd demo/merchant && npm run seed && npm run dev" \
+    "cd demo/merchant && npm run dev" \
     "cd demo/psp && npm run dev" &
 
 # Wait for background process
