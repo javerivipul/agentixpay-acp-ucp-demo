@@ -10,7 +10,7 @@
     "dev": "NODE_OPTIONS='-r dotenv/config' vite-node src/index.ts"
   },
   "keywords": ["mcp", "mcp-ui", "commerce", "acp"],
-  "author": "Locus <info@paywithlocus.com>",
+  "author": "AgentixPay <info@agentixpay.com>",
   "license": "MIT",
   "dependencies": {
     "@mcp-ui/server": "^5.2.0",

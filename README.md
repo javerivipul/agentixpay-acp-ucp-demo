@@ -2,7 +2,7 @@
 # AgentixPay ACP/UCP Demo Implementation
 <p align="center">
   <a href="https://agentixpay.com">
-    <img src="https://www.agentixpay.ai/logo.png" alt="AgentixPay Logo" width="120"/>
+    <img src="docs/locus-logo.png" alt="AgentixPay Logo" width="120"/>
   </a><br/>
   <em>Powered by AgentixPay</em>
 </p>

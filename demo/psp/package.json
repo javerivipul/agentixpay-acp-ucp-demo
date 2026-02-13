@@ -15,7 +15,7 @@
     "payment",
     "stripe"
   ],
-  "author": "Locus <info@paywithlocus.com>",
+  "author": "AgentixPay <info@agentixpay.com>",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
