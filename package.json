@@ -1,15 +1,15 @@
 {
-  "name": "agentic-commerce-protocol",
+  "name": "agentixpay-acp-ucp-demo",
   "version": "1.0.0",
-  "description": "Reference implementation of OpenAI's Agentic Commerce Protocol (ACP)",
-  "author": "Locus <info@paywithlocus.com>",
+  "description": "AgentixPay implementation of ACP and UCP protocols",
+  "author": "AgentixPay",
   "contributors": [
     "Eliot Lee"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/locus-technologies/agentic-commerce-protocol-demo"
+    "url": "https://github.com/javerivipul/agentixpay-acp-ucp-demo"
   },
   "private": true,
   "type": "module",

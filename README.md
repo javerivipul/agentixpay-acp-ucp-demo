@@ -1,10 +1,10 @@
 
-# Agentic Commerce Protocol (ACP) Demo Implementation
+# AgentixPay ACP/UCP Demo Implementation
 <p align="center">
-  <a href="https://paywithlocus.com">
-    <img src="docs/locus-logo.png" alt="Locus Logo" width="120"/>
+  <a href="https://agentixpay.com">
+    <img src="docs/locus-logo.png" alt="AgentixPay Logo" width="120"/>
   </a><br/>
-  <em>Built with ❤️ by <a href="https://paywithlocus.com">Locus</a> (YC F25)</em>
+  <em>Built with ❤️ by AgentixPay</em>
 </p>
 
 
@@ -28,8 +28,8 @@ To accelerate experimentation, we built the **first working mock implementation*
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/locus-technologies/agentic-commerce-protocol-demo
-   cd agentic-commerce-protocol-demo
+   git clone https://github.com/javerivipul/agentixpay-acp-ucp-demo
+   cd agentixpay-acp-ucp-demo
    ```
 
 2. **Install dependencies**
@@ -170,8 +170,8 @@ All endpoints defined by the ACP spec adhere to the standard, including required
 
 That said, [ACP repo](https://github.com/agentic-commerce-protocol/agentic-commerce-protocol) is still in `draft`, so details may change. We’ll track updates closely and welcome contributions from the community to keep this implementation in sync!
 
-## About us
-With talent from Scale AI and Coinbase, Locus (YC F25) is building agentic payment infrastructure for the machine economy. We're launching soon. Learn more about us and join our waitlist at [paywithlocus.com](https://paywithlocus.com).
+## About AgentixPay
+AgentixPay is building agentic payment infrastructure for the machine economy.
 
 </br>
 
