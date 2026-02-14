@@ -54,7 +54,7 @@ const anthropicClient = createAnthropic({
 const languageModels = {
   "gpt-5": openaiClient("gpt-5-2025-08-07"),
   "claude-4-sonnet": anthropicClient('claude-sonnet-4-20250514'),
-  "gemini-2.5-pro": google("gemini-2.5-pro-preview-06-05", { apiKey: getApiKey('GEMINI_API_KEY') }),
+  "gemini-2.5-pro": google("gemini-2.5-pro-preview-06-05"),
   // "qwen-qwq": wrapLanguageModel(
   //   {
   //     model: groqClient("qwen-qwq-32b"),
