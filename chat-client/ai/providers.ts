@@ -1,5 +1,6 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 import { 
   customProvider, 
@@ -43,6 +44,10 @@ const anthropicClient = createAnthropic({
   apiKey: getApiKey('ANTHROPIC_API_KEY'),
 });
 
+const googleClient = createGoogleGenerativeAI({
+  apiKey: getApiKey('GEMINI_API_KEY'),
+});
+
 
 // const xaiClient = createXai({
 //   apiKey: getApiKey('XAI_API_KEY'),
@@ -51,6 +56,7 @@ const anthropicClient = createAnthropic({
 const languageModels = {
   "gpt-5": openaiClient("gpt-5-2025-08-07"),
   "claude-4-sonnet": anthropicClient('claude-sonnet-4-20250514'),
+  "gemini-2.5-pro": googleClient("gemini-2.5-pro-preview-06-05"),
   // "qwen-qwq": wrapLanguageModel(
   //   {
   //     model: groqClient("qwen-qwq-32b"),
@@ -74,6 +80,13 @@ export const modelDetails: Record<keyof typeof languageModels, ModelInfo> = {
     description: "Latest version of Anthropic's Claude 4 Sonnet with strong reasoning and coding capabilities.",
     apiVersion: "claude-sonnet-4-20250514",
     capabilities: ["Reasoning", "Efficient", "Agentic"]
+  },
+  "gemini-2.5-pro": {
+    provider: "Google",
+    name: "Gemini 2.5 Pro",
+    description: "Google's most advanced multimodal model with excellent reasoning and long context.",
+    apiVersion: "gemini-2.5-pro",
+    capabilities: ["Reasoning", "Vision", "Long Context", "Code"]
   },
   // "qwen-qwq": {
   //   provider: "Groq",
@@ -109,4 +122,4 @@ export type modelID = keyof typeof languageModels;
 
 export const MODELS = Object.keys(languageModels);
 
-export const defaultModel: modelID = "gpt-5";
+export const defaultModel: modelID = "gemini-2.5-pro";

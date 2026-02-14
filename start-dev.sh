@@ -14,7 +14,7 @@ cleanup() {
     pkill -9 -f concurrently 2>/dev/null
 
     # Stop docker containers
-    docker-compose down 2>/dev/null
+    docker compose down 2>/dev/null
 
     exit 0
 }
@@ -22,32 +22,40 @@ cleanup() {
 # Trap Ctrl+C and call cleanup
 trap cleanup INT TERM
 
-# Copy .env.example to .env if .env doesn't exist
-echo "Checking environment files..."
-if [ ! -f demo/merchant/.env ]; then
-    echo "Creating demo/merchant/.env from demo/merchant/.env.example"
-    cp demo/merchant/.env.example demo/merchant/.env
+# Source parent .env if exists
+if [ -f .env ]; then
+    echo "Loading parent .env configuration..."
+    set -a
+    source .env
+    set +a
 fi
 
-if [ ! -f demo/psp/.env ]; then
-    echo "Creating demo/psp/.env from demo/psp/.env.example"
-    cp demo/psp/.env.example demo/psp/.env
-fi
+# Sync environment files - create symlinks to parent .env
+echo "Syncing environment files from parent .env..."
 
-if [ ! -f demo/mcp-ui-server/.env ]; then
-    echo "Creating demo/mcp-ui-server/.env from demo/mcp-ui-server/.env.example"
-    cp demo/mcp-ui-server/.env.example demo/mcp-ui-server/.env
-fi
+# Create or update symlinks to parent .env for each service
+for dir in demo/merchant demo/psp demo/mcp-ui-server chat-client; do
+    if [ -f .env ] && [ ! -L "$dir/.env" ]; then
+        # Backup existing .env if it's not a symlink
+        if [ -f "$dir/.env" ] && [ ! -L "$dir/.env" ]; then
+            mv "$dir/.env" "$dir/.env.backup"
+        fi
+        # Create symlink to parent .env
+        ln -sf ../../.env "$dir/.env"
+        echo "  Linked $dir/.env -> parent .env"
+    fi
+done
 
-# Clean up and start containers
-docker-compose up -d --wait
+# Start PostgreSQL containers
+docker compose up -d --wait
 sleep 5
 
 # Start all services
-npx concurrently -n MCP,MERCHANT,PSP -c cyan,green,yellow \
+npx concurrently -n MCP,MERCHANT,PSP,CHAT -c cyan,green,yellow,blue \
     "cd demo/mcp-ui-server && npm run dev" \
     "cd demo/merchant && npm run dev" \
-    "cd demo/psp && npm run dev" &
+    "cd demo/psp && npm run dev" \
+    "cd chat-client && npm run dev" &
 
 # Wait for background process
 wait
