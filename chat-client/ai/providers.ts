@@ -1,6 +1,6 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { google } from "@ai-sdk/google";
 
 import { 
   customProvider, 
@@ -44,9 +44,7 @@ const anthropicClient = createAnthropic({
   apiKey: getApiKey('ANTHROPIC_API_KEY'),
 });
 
-const googleClient = createGoogleGenerativeAI({
-  apiKey: getApiKey('GEMINI_API_KEY'),
-});
+// Google client uses the 'google' function directly in languageModels
 
 
 // const xaiClient = createXai({
@@ -56,7 +54,10 @@ const googleClient = createGoogleGenerativeAI({
 const languageModels = {
   "gpt-5": openaiClient("gpt-5-2025-08-07"),
   "claude-4-sonnet": anthropicClient('claude-sonnet-4-20250514'),
-  "gemini-2.5-pro": googleClient("gemini-2.5-pro-preview-06-05"),
+  "gemini-2.5-pro": google({
+    model: "gemini-2.5-pro-preview-06-05",
+    apiKey: getApiKey('GEMINI_API_KEY'),
+  }),
   // "qwen-qwq": wrapLanguageModel(
   //   {
   //     model: groqClient("qwen-qwq-32b"),
